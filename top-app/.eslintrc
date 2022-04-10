@@ -5,9 +5,9 @@
 		"@typescript-eslint"
 	],
 	"rules": {
-		"semi": "off",
+		"semi": "off",// отключаем нужду по умолчанию в точке с зарятой
 		"@typescript-eslint/semi": [
-			"warn"
+			"warn"// говорим что точка с запятой будет warn
 		],
 		"@typescript-eslint/no-empty-interface": [
 			"error",
