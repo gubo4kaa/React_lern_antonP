@@ -6,9 +6,10 @@
       "dom.iterable",
       "esnext"
     ],
-    "allowJs": true,
+    "allowJs": false, //если будет встречаться файл js то будет ошибка
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
+    "strictPropertyInitialization": false, //для того что бы stict не ругался при использовании классов как интерфейсов
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "incremental": true,
