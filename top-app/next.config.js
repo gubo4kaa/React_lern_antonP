@@ -23,6 +23,7 @@ module.exports = {
 			},
 			test: /\.svg$/,
 		});
+
 		return config;
 	},
 };
