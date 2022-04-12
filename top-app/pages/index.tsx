@@ -15,7 +15,7 @@ export default function Home(): JSX.Element {
     console.log('Mounted');
   }, []);
 
-  const [rating, setRating] = useState<number>(1);
+  const [rating, setRating] = useState<number>(1); // так как мы передаём в setReiting начальное число, он и является функцией изменения рейтинга
   
 
   return (
