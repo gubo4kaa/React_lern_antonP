@@ -2,7 +2,7 @@ import { RatingProps } from './Rating.props';
 import styles from './Rating.module.css';
 import cn from 'classnames';
 import StarIcon from './star.svg';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, KeyboardEvent } from 'react';
 
 
 export const Rating = ({isEditable = false, rating, setRating, ...props}: RatingProps): JSX.Element => {
@@ -15,15 +15,21 @@ export const Rating = ({isEditable = false, rating, setRating, ...props}: Rating
 	const constructRating = (currentRating: number) => {
 		const updateArray = ratingArray.map((r: JSX.Element, i: number) => {//создаёт массив, берёт готовый масив, и обновляет в нём данные
 			return( 
+			<span
+				className={cn(styles.star, {//class name, для этого нужно изменить файл next-env.d.ts
+					[styles.filled]: i < currentRating,// если индекс текущего массива меньше чем текущий рейтинг заливаем звезду
+					[styles.editable]: isEditable
+				})}
+				onMouseEnter={() => changeDisplay(i + 1)}// При наведении курсора
+				onMouseLeave={() => changeDisplay(rating)}// Когда убироем курсор с объекта
+				onClick={() => onClick(i + 1)}
+			>
 				<StarIcon
-					className={cn(styles.star, {//class name, для этого нужно изменить файл next-env.d.ts
-						[styles.filled]: i < currentRating,// если индекс текущего массива меньше чем текущий рейтинг заливаем звезду
-						[styles.editable]: isEditable
-					})}
-					onMouseEnter={() => changeDisplay(i + 1)}// При наведении курсора
-					onMouseLeave={() => changeDisplay(rating)}// Когда убироем курсор с объекта
-					onClick={() => onClick(i + 1)}
+					tabIndex={isEditable ? 0: -1}//Обарабатывю событие по табу, на переход на следующий элемент
+					onKeyDown={(e: KeyboardEvent<SVGAElement>) => isEditable && handleSpace(i+1, e)}//обрабатываем нажатие на пробел функцией handleSpace
 				/>
+			</span>
+				
 			);
 		});
 		setRatingArray(updateArray);//обновляем массив, в зависимости от обновлённого массива
@@ -41,6 +47,13 @@ export const Rating = ({isEditable = false, rating, setRating, ...props}: Rating
 			return;
 		}
 		setRating(i);// устанавливаем отображение
+	};
+
+	const handleSpace = (i: number, e: KeyboardEvent<SVGAElement>) => {
+		if(e.code != 'Space' || !setRating) {
+			return;
+		}
+		setRating(i);
 	};
 
 
