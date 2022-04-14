@@ -14,7 +14,8 @@
 			{
 				"allowSingleExtends": true
 			}
-		]
+		],
+		"no-mixed-spaces-and-tabs": 0
 	},
 	"extends": [
 		"eslint:recommended",
