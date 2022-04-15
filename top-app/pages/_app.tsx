@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-page-custom-font */
 
 // всё что связано с хедаром находиться здесь!
 import { AppProps } from 'next/app';

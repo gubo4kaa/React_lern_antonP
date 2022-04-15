@@ -12,7 +12,8 @@ export interface ReviewModel {
 	createdAt: Date;
 }
 
-export interface ProductModule {
+export interface ProductModel {
+	length: any;
 	_id: string;
 	categories: string[];
 	tags: string[];
