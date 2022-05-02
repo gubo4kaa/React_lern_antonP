@@ -3,7 +3,7 @@ import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, Next
 class Mydocument extends Document { // инициацлизируем документ правильно
 
 	static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
-		const initianPops = await Document.getInitialProps(ctx)
+		const initianPops = await Document.getInitialProps(ctx);
 		return{ ...initianPops};
 	}
 
@@ -20,4 +20,4 @@ class Mydocument extends Document { // инициацлизируем докум
 	}
 }
 
-export default Mydocument
+export default Mydocument;

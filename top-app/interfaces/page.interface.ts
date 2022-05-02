@@ -1,4 +1,4 @@
-export enum ToplevelCategory {
+export enum TopLevelCategory {
 	Courses,
 	Services,
 	Books,
@@ -39,7 +39,7 @@ export interface TopPageModel {
 	tagsTitle: string;
 	metaTitle: string;
 	metaDescription: string;
-	firstCategory: ToplevelCategory;
+	firstCategory: TopLevelCategory;
 	advantages: TopPageAdvantage[];
 	createdAt: Date;
 	updatedAt: Date;
