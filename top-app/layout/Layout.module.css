@@ -1,7 +1,7 @@
 .wrapper {
 	display: grid;
 	grid-template-columns: auto 230px minmax(320px, 1200px) auto;
-	gap: 0 30px;
+	gap: 40px 30px;
 	min-height: 100vh; /* здесь делаем минимальную высоту сонтейнера, высота окна*/
 	grid-template-rows: auto 1fr auto; /*говроим,что в верхней и нижней строке будет столько места, сколько в них контента*/
 	grid-template-areas:
@@ -29,22 +29,24 @@
 
 @media (max-width: 765px) {
 	
-.wrapper {
+	.wrapper {
 	grid-template-columns: minmax(320px, 1fr) auto;
 	gap: 0;
 	grid-template-areas: 
 	"header"
 	"body"
 	"footer";
-}
+	}
 
 	.sidebar{
-		display:none
+		display:none !important
 	}
 
 	.header{
 		display: block
 	}
 
-
+	.body {
+		padding: 15px
+	}
 }

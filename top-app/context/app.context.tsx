@@ -16,7 +16,7 @@ export const AppContextProvider = ({ menu, firstCategory, children }: PropsWithC
 		setMenuState(newMenu);
 	};
  // Теперь когда кто-то будет получать сет меню функцию из контекста, будте вызываться обновление стейти все те кто подписался на контекст получат новое меню
-	return <AppContext.Provider value={{ menu: menuState, firstCategory, setMenu }}>; 
+	return <AppContext.Provider value={{ menu: menuState, firstCategory, setMenu }}> 
 		{children}
 	</AppContext.Provider>;
 };

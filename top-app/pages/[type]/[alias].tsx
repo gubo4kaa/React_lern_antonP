@@ -7,17 +7,18 @@ import { TopLevelCategory, TopPageModel } from "../../interfaces/page.interface"
 import { ParsedUrlQuery } from "querystring";
 import { ProductModel } from "../../interfaces/product.interface";
 import { firstLevelMenu } from "../../helpers/helpers";
+import { TopPageComponent } from "../../page-components";
 
-function Course({menu, page, products}: CourseProps): JSX.Element {
-  return (
-    <>
-		{products && products.length}
-    </>
-  );
+function TopPage({firstCategory, page, products}: TopPageProps): JSX.Element {
+  return <TopPageComponent 
+  		firstCategory={firstCategory} 
+  		page={page} 
+  		products={products} 
+		/>;
 }
 
 
-export default withLayout(Course); // експортируем дефолтный не самс компонент, а этот компонент в обёртке
+export default withLayout(TopPage); // експортируем дефолтный не самс компонент, а этот компонент в обёртке
 
 export const getStaticPaths: GetStaticPaths = async () => {
 	let paths: string[] = [];
@@ -28,15 +29,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 		paths = paths.concat(menu.flatMap(s => s.pages.map(p =>`/${m.route}/`  + p.alias)));
 	}
 
-	
-	console.log(paths);
 	return {
 		paths,
 		fallback: true
 	};
 };// Получаем пути, для того, что бы некст знал как резолвить эту страницу, для этого приходит на помощь getStaticPach
 
-export const getStaticProps: GetStaticProps<CourseProps> = async ({ params }: GetStaticPropsContext<ParsedUrlQuery>) => {// в результате мы видим что данные отображаются в исходном коде страницы, и мы можем отлично настроить СЕО
+export const getStaticProps: GetStaticProps<TopPageProps> = async ({ params }: GetStaticPropsContext<ParsedUrlQuery>) => {// в результате мы видим что данные отображаются в исходном коде страницы, и мы можем отлично настроить СЕО
 	if(!params) {
 		return {
 			notFound: true
@@ -49,28 +48,39 @@ export const getStaticProps: GetStaticProps<CourseProps> = async ({ params }: Ge
 			notFound: true
 		};
 	}
-	const {data: menu} = await axios.post<MenuItem[]>(process.env.NEXT_PUBLIC_DOMAIN + '/api/top-page/find', {
-		firstCategory: firstCategoryItem.id
-	});// получаем меню
-
-	const {data: page} = await axios.get<TopPageModel>(process.env.NEXT_PUBLIC_DOMAIN + '/api/top-page/byAlias/' + params.alias);//Получаем страницу по алиасу
-
-	const {data: products} = await axios.post<ProductModel[]>(process.env.NEXT_PUBLIC_DOMAIN + '/api/product/find', {
-		category: page.category,
-		limit: 10
-	});//Получаем продукты
+	try{//пытаемся сделать запросы, если не поолучается то еделаем catch
+		const {data: menu} = await axios.post<MenuItem[]>(process.env.NEXT_PUBLIC_DOMAIN + '/api/top-page/find', {
+			firstCategory: firstCategoryItem.id
+		});// получаем меню
+		if( menu.length == 0) {
+			return {
+				notFound: true
+			};
+		}
+		const {data: page} = await axios.get<TopPageModel>(process.env.NEXT_PUBLIC_DOMAIN + '/api/top-page/byAlias/' + params.alias);//Получаем страницу по алиасу
 	
-	return {
-		props: {
-			menu,
-			firstCategory: firstCategoryItem.id,
-			page,
-			products// отдаём продукты которые мы получили
-		} // возвращает пропсы, и дальше передаёт их в компонент
-	};
+		const {data: products} = await axios.post<ProductModel[]>(process.env.NEXT_PUBLIC_DOMAIN + '/api/product/find', {
+			category: page.category,
+			limit: 10
+		});//Получаем продукты
+		
+		return {
+			props: {
+				menu,
+				firstCategory: firstCategoryItem.id,
+				page,
+				products// отдаём продукты которые мы получили
+			} // возвращает пропсы, и дальше передаёт их в компонент
+		};
+	} catch {
+		return {
+			notFound: true
+		};
+	}
+	
 };
 
-interface CourseProps extends Record<string, unknown> { // екстендим что бы ушла ошибка о том, что Home не ожидает таких пропсов
+interface TopPageProps extends Record<string, unknown> { // екстендим что бы ушла ошибка о том, что Home не ожидает таких пропсов
   menu: MenuItem[];
   firstCategory: TopLevelCategory;
   page: TopPageModel;
