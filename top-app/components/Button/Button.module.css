@@ -5,13 +5,15 @@
 	padding: 10px;
 
 	cursor: pointer;
+	transition: all 0.2s;
 	text-align: center;
+
 	border: none;
 	border-radius: 5px;
 
 	font-size: 14px;
-	transition: all 0.4s;
 
+	white-space: nowrap;
 }
 
 .primary {
@@ -25,29 +27,27 @@
 
 .ghost {
 	color: var(--black);
-	background-color:none;
-	border: 1px solid var(--gray-light)
+	border: 1px solid var(--gray-light);
+	background: none;
 }
 
 .ghost:hover {
+	color: var(--white);
 	background-color: var(--primary);
-	color: var(--white)
 }
 
 .arrow {
 	display: inline-block;
-	
+
 	margin-left: 10px;
-	transition: all 0.4s;
 }
 
 .down {
+	transition: all 0.2s;
 	transform: rotate(90deg);
-	transition: all 0.4s;
 }
 
 .primary svg,
 .ghost:hover svg {
 	fill: var(--white);
-	transition: all 0.4s;
 }

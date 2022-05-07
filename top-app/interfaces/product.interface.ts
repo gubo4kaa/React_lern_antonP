@@ -18,7 +18,7 @@ export interface ProductModel {
 	categories: string[];
 	tags: string[];
 	title: string;
-	image: string;
+	image: ImageData;
 	description: string;
 	link: string;
 	price: number;
@@ -26,6 +26,7 @@ export interface ProductModel {
 	oldPrice: number;
 	characteristics: ProductCharacteristic[];
 	advantages: string;
+	disadvantages: string;
 	initialRating: number;
 	createdAt: Date;
 	updatedAt: Date;

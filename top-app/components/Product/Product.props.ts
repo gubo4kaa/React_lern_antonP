@@ -1,6 +1,6 @@
-import { DetailedHTMLProps, HTMLAttributes, ReactNode } from "react";
+import { DetailedHTMLProps, HTMLAttributes } from 'react';
+import { ProductModel } from '../../interfaces/product.interface';
 
-export interface ProductProps extends DetailedHTMLProps<HTMLAttributes<HTMLParagraphElement>,HTMLParagraphElement>{
-	children: ReactNode;
-	size?:'s' | 'm' | 'l';
+export interface ProductProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+	product: ProductModel;
 }
