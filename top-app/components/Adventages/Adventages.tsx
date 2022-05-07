@@ -1,9 +1,8 @@
 import styles from './Adventages.module.css';
 import { AdventagesProps } from './Adventages.props';
 import React from 'react';
-import CheckIcon from './Check.svg';
-import { Card } from '../Card/Card';
-import { priceRu } from '../../helpers/helpers';
+import CheckIcon from './check.svg';
+
 
 
 export const Adventages = ({advantages}: AdventagesProps): JSX.Element => {
