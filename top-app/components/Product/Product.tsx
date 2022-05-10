@@ -9,6 +9,8 @@ import { declOfNum, priceRu } from '../../helpers/helpers';
 import { Divider } from '../Divider/Divider';
 import Image from 'next/image';
 import { useState } from 'react';
+import { Review } from '../Review/Review';
+import { ReviewForm } from '../ReviewForm/ReviewForm';
 
 
 export const Product = ({product, className, ...props}: ProductProps): JSX.Element => {
@@ -79,8 +81,14 @@ export const Product = ({product, className, ...props}: ProductProps): JSX.Eleme
 				[styles.opened]: isReviewOpened,
 				[styles.closed]: !isReviewOpened,
 			})}>
-				ываыва
-
+				{product.reviews.map(r => (
+					<div key={r._id}>
+						<Review  review={r} />
+						<Divider/>
+					</div>
+					
+				))}
+				<ReviewForm productId={product._id} />
 			</Card>
 		</>
 		

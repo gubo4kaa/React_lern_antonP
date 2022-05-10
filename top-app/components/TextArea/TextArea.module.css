@@ -16,7 +16,7 @@
 }
 
 .textarea::placeholder {
-	color: var(--gray);
+	color: var(--gray-dark);
 }
 
 .error {
