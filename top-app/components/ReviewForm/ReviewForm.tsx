@@ -2,13 +2,11 @@ import styles from './ReviewForm.module.css';
 import CloseIcon from './clouse.svg';
 import { ReviewFormProps } from './ReviewForm.props';
 import cn from 'classnames';
-import { format } from 'date-fns';
-import { ru } from 'date-fns/locale';
 import { Rating } from '../Rating/Rating';
 import { Input } from '../Input/Input';
 import { TextArea } from '../TextArea/TextArea';
 import { Button } from '../Button/Button';
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { IReviewForm } from './ReviewForm.interface';
 
 
@@ -29,7 +27,14 @@ export const ReviewForm = ({productId, className, ...props}: ReviewFormProps): J
 				<Input {...register('title')} placeholder='Заголовок отзыва' className={styles.title}/>
 				<div className={styles.rating}>
 					<span>Оценка:</span>
-					<Rating rating={0}/>
+					<Controller
+						control={control}
+						name='rating'
+						render={( {field} ) => (
+							<Rating isEditable rating={field.value} ref={field.ref} setRating={field.onChange}/>
+						)}// здесь нужно пробросить рефы в сам компонент внутри него
+					/>
+					
 				</div>
 				<TextArea {...register('description')} placeholder='Текст отзыва' className={styles.discription} />
 				<div className={styles.submit}>
