@@ -11,7 +11,7 @@ import { IReviewForm } from './ReviewForm.interface';
 
 
 export const ReviewForm = ({productId, className, ...props}: ReviewFormProps): JSX.Element => {
-	const { register, control, handleSubmit } = useForm<IReviewForm>();
+	const { register, control, handleSubmit, formState: { errors } } = useForm<IReviewForm>();
 
 	const onSubmit = (data: IReviewForm) => {
 		console.log(data);
@@ -21,10 +21,19 @@ export const ReviewForm = ({productId, className, ...props}: ReviewFormProps): J
 		<form onSubmit={handleSubmit(onSubmit)} >
 			<div 
 				className={cn(styles.reviewForm, className)}
-				{...props}
+				{...props}// в строке импут показана обработка ошибки, requared- обработка ошибки, value: вклюяение обработки обязательного поля, message: сообщение поля, ещё нужно добавить состояние формы 
 			>
-				<Input {...register('name')} placeholder='Имя'/>
-				<Input {...register('title')} placeholder='Заголовок отзыва' className={styles.title}/>
+				<Input 
+					{...register('name', {required: {value: true, message: 'Заполните имя'}})} 
+					placeholder='Имя'
+					error={errors.name}
+				/>
+				<Input 
+				{...register('title', {required: {value: true, message: 'Заполните заголовок'}})} 
+				placeholder='Заголовок отзыва' 
+				className={styles.title}
+				error={errors.title}
+				/>
 				<div className={styles.rating}>
 					<span>Оценка:</span>
 					<Controller
@@ -36,7 +45,12 @@ export const ReviewForm = ({productId, className, ...props}: ReviewFormProps): J
 					/>
 					
 				</div>
-				<TextArea {...register('description')} placeholder='Текст отзыва' className={styles.discription} />
+				<TextArea 
+					{...register('description', {required: {value: true, message: 'Заполните описание'}})} // Обработка ошибки импута, перед эти подправаили текст ареа
+					placeholder='Текст отзыва' 
+					className={styles.discription} 
+					error={errors.description}
+				/>
 				<div className={styles.submit}>
 					<Button appearance='primary'>Отправить</Button>
 					<span className={styles.info}>* Перед публикацией отзыв пройдет предварительную модерацию и проверку</span>
