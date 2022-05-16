@@ -39,9 +39,15 @@ export const ReviewForm = ({productId, className, ...props}: ReviewFormProps): J
 					<Controller
 						control={control}
 						name='rating'
+						rules={{required: {value: true, message: 'Укажите рейтинг'}}}
 						render={( {field} ) => (
-							<Rating isEditable rating={field.value} ref={field.ref} setRating={field.onChange}/>
-						)}// здесь нужно пробросить рефы в сам компонент внутри него
+							<Rating 
+							isEditable rating={field.value} 
+							ref={field.ref} 
+							setRating={field.onChange}
+							error={errors.rating}
+							/>
+						)}// здесь нужно пробросить рефы в сам компонент внутри него. Контроллера принимает рулсы внутри него
 					/>
 					
 				</div>
