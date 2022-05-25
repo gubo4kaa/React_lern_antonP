@@ -150,6 +150,10 @@
     padding: 30px;
 }
 
+.rateTitle a {
+    color: var(--primary);
+}
+
 
 
 

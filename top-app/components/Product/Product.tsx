@@ -8,22 +8,30 @@ import { Button } from '../Button/Button';
 import { declOfNum, priceRu } from '../../helpers/helpers';
 import { Divider } from '../Divider/Divider';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Review } from '../Review/Review';
 import { ReviewForm } from '../ReviewForm/ReviewForm';
 
 
 export const Product = ({product, className, ...props}: ProductProps): JSX.Element => {
 	const [isReviewOpened, setIsReviewOpened] = useState<boolean>(false)// useState, это хуук для состояния открытия продукта
+	const srcImg: string  = process.env.NEXT_PUBLIC_DOMAIN as string;
+	const reviewRef = useRef<HTMLDivElement>(null);//создаём хукРеф, и в него внизу передадим див елемент, что бы потом к нему возваращаться
 
-
+	const scrollToReview = () => {//Перед пробросом рефа, нужно пробросить его в сам компонент карт!!
+		setIsReviewOpened(true);
+		reviewRef.current?.scrollIntoView({
+			behavior: 'smooth',
+			block: 'start'
+		});
+	}
 
 	return (
-		<>
+		<div className={className} {...props}>
 			<Card className={styles.product}>
 				<div className={styles.logo}>
 					<Image // перед этим нужно настроить next.config там нужно добавить домен с которого будут грузиться картинки
-						src={process.env.NEXT_PUBLIC_DOMAIN + product.image}
+						src={srcImg + product.image}
 						alt={product.title}
 						width={70}
 						height={70}
@@ -41,7 +49,8 @@ export const Product = ({product, className, ...props}: ProductProps): JSX.Eleme
 				<div className={styles.tags}>{product.categories.map(c => <Tag className={styles.category} key={c} color='ghost'>{c}</Tag>)}</div>
 				<div className={styles.priceTitle}>цена</div>
 				<div className={styles.creditTitle}>кредит</div>
-				<div className={styles.rateTitle}>{product.reviewCount} {declOfNum(product.reviewCount, ['отзыв','отзыва','отзывов'])}</div>
+				<div className={styles.rateTitle}><a href="#ref" onClick={scrollToReview}>{product.reviewCount} {declOfNum(product.reviewCount, ['отзыв','отзыва','отзывов'])}</a></div>
+				
 				<Divider className={styles.hr}/>
 				<div className={styles.description}>{product.description}</div>
 				<div className={styles.feature}>
@@ -80,7 +89,7 @@ export const Product = ({product, className, ...props}: ProductProps): JSX.Eleme
 			<Card color='blue' className={cn(styles.reviews, {// хороший пример исползования state!!!!!!!!!!!!!!
 				[styles.opened]: isReviewOpened,
 				[styles.closed]: !isReviewOpened,
-			})}>
+			})} ref={reviewRef}>
 				{product.reviews.map(r => (
 					<div key={r._id}>
 						<Review  review={r} />
@@ -90,7 +99,7 @@ export const Product = ({product, className, ...props}: ProductProps): JSX.Eleme
 				))}
 				<ReviewForm productId={product._id} />
 			</Card>
-		</>
+		</div>
 		
 	);
 };

@@ -2,18 +2,21 @@ import styles from './TopPageComponent.module.css';
 import { TopPageComponentProps } from './TopPageComponent.props';
 import { Adventages, HhData, Htag, P, Product, Sort, Tag } from '../../components';
 import { TopLevelCategory } from '../../interfaces/page.interface';
-import Ready from './ready.svg';
 import { SortEnum } from '../../components/Sort/Sort.props';
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { sortReducer } from './sort.reduser';
 
 
-export const TopPageComponent = ({ page, products, firstCategory}: TopPageComponentProps): JSX.Element => {
+export const TopPageComponent = ({ page, products, firstCategory }: TopPageComponentProps): JSX.Element => {
 	const [{products: sortedProducts, sort}, dispathSort] = useReducer(sortReducer, { products, sort: SortEnum.Rating });
 
 	const setSort = (sort: SortEnum) => {
 		dispathSort({type: sort});
 	};
+
+	useEffect(() => {
+		dispathSort({type:'reset', initialState: products});
+	}, [products])
 
 	return (
 		<div className={styles.wrapper}>

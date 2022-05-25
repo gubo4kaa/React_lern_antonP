@@ -4,6 +4,7 @@ import { withLayout } from "../layout/Layout";
 import axios from "axios";
 import { GetStaticProps } from "next";
 import { MenuItem } from "../interfaces/menu.interface";
+import { API } from "../helpers/api";
 function Home({menu, firstCategory}: HomeProps): JSX.Element {
   const [rating, setRating] = useState<number>(1); // так как мы передаём в setReiting начальное число, он и является функцией изменения рейтинга
 
@@ -26,7 +27,7 @@ export default withLayout(Home); // експортируем дефолтный 
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {// в результате мы видим что данные отображаются в исходном коде страницы, и мы можем отлично настроить СЕО
   const firstCategory = 0;
-  const {data: menu} = await axios.post<MenuItem[]>(process.env.NEXT_PUBLIC_DOMAIN + '/api/top-page/find', {
+  const {data: menu} = await axios.post<MenuItem[]>(API.topPage.find, {
     firstCategory
   });//Запрос на бэк для получения данных о сайд меню слева
   return {
