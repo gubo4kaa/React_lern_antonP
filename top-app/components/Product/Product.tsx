@@ -16,6 +16,7 @@ import { ReviewForm } from '../ReviewForm/ReviewForm';
 export const Product = ({product, className, ...props}: ProductProps): JSX.Element => {
 	const [isReviewOpened, setIsReviewOpened] = useState<boolean>(false)// useState, это хуук для состояния открытия продукта
 	const srcImg: string  = process.env.NEXT_PUBLIC_DOMAIN as string;
+	const srcImgData:string = product.image as unknown as string;
 	const reviewRef = useRef<HTMLDivElement>(null);//создаём хукРеф, и в него внизу передадим див елемент, что бы потом к нему возваращаться
 
 	const scrollToReview = () => {//Перед пробросом рефа, нужно пробросить его в сам компонент карт!!
@@ -31,7 +32,8 @@ export const Product = ({product, className, ...props}: ProductProps): JSX.Eleme
 			<Card className={styles.product}>
 				<div className={styles.logo}>
 					<Image // перед этим нужно настроить next.config там нужно добавить домен с которого будут грузиться картинки
-						src={srcImg + product.image}
+						//src={srcImg + product.image}
+						src={/^https?:\/\//i.test(srcImgData) ? srcImgData : srcImg + srcImgData}
 						alt={product.title}
 						width={70}
 						height={70}
