@@ -8,16 +8,19 @@ import { Button } from '../Button/Button';
 import { declOfNum, priceRu } from '../../helpers/helpers';
 import { Divider } from '../Divider/Divider';
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { ForwardedRef, forwardRef, useRef, useState } from 'react';
 import { Review } from '../Review/Review';
 import { ReviewForm } from '../ReviewForm/ReviewForm';
+import { motion } from 'framer-motion'
 
 
-export const Product = ({product, className, ...props}: ProductProps): JSX.Element => {
+export const Product = motion(forwardRef(({product, className, ...props}: ProductProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element => {
 	const [isReviewOpened, setIsReviewOpened] = useState<boolean>(false)// useState, это хуук для состояния открытия продукта
 	const srcImg: string  = process.env.NEXT_PUBLIC_DOMAIN as string;
 	const srcImgData:string = product.image as unknown as string;
 	const reviewRef = useRef<HTMLDivElement>(null);//создаём хукРеф, и в него внизу передадим див елемент, что бы потом к нему возваращаться
+
+	
 
 	const scrollToReview = () => {//Перед пробросом рефа, нужно пробросить его в сам компонент карт!!
 		setIsReviewOpened(true);
@@ -28,7 +31,7 @@ export const Product = ({product, className, ...props}: ProductProps): JSX.Eleme
 	}
 
 	return (
-		<div className={className} {...props}>
+		<div className={className} {...props} ref={ref}>
 			<Card className={styles.product}>
 				<div className={styles.logo}>
 					<Image // перед этим нужно настроить next.config там нужно добавить домен с которого будут грузиться картинки
@@ -104,4 +107,6 @@ export const Product = ({product, className, ...props}: ProductProps): JSX.Eleme
 		</div>
 		
 	);
-};
+}));
+
+
