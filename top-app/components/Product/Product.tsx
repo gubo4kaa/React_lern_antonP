@@ -20,7 +20,16 @@ export const Product = motion(forwardRef(({product, className, ...props}: Produc
 	const srcImgData:string = product.image as unknown as string;
 	const reviewRef = useRef<HTMLDivElement>(null);//создаём хукРеф, и в него внизу передадим див елемент, что бы потом к нему возваращаться
 
-	
+	const variants = {
+		visible: {
+			opacity: 1,
+			height: 'auto'
+		},
+		hidden: {
+			opacity: 0,
+			height: 0
+		}
+	}
 
 	const scrollToReview = () => {//Перед пробросом рефа, нужно пробросить его в сам компонент карт!!
 		setIsReviewOpened(true);
@@ -91,19 +100,20 @@ export const Product = motion(forwardRef(({product, className, ...props}: Produc
 					</Button>
 				</div>
 			</Card>
-			<Card color='blue' className={cn(styles.reviews, {// хороший пример исползования state!!!!!!!!!!!!!!
-				[styles.opened]: isReviewOpened,
-				[styles.closed]: !isReviewOpened,
-			})} ref={reviewRef}>
-				{product.reviews.map(r => (
-					<div key={r._id}>
-						<Review  review={r} />
-						<Divider/>
-					</div>
-					
-				))}
-				<ReviewForm productId={product._id} />
-			</Card>
+			<motion.div animate={isReviewOpened ? 'visible': 'hidden'} variants={variants} initial='hidden'>
+				<Card color='blue' className={styles.reviews} ref={reviewRef}>
+					{product.reviews.map(r => (
+						<div key={r._id}>
+							<Review  review={r} />
+							<Divider/>
+						</div>
+						
+					))}
+					<ReviewForm productId={product._id} />
+				</Card>
+
+			</motion.div>
+			
 		</div>
 		
 	);
