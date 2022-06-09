@@ -13,6 +13,7 @@ import Head from 'next/head';
 
 function TopPage({firstCategory, page, products}: TopPageProps): JSX.Element {
   return<>
+		{page && products && <>
 		<Head>
 			<title>{page.metaTitle}</title>
 			<meta name="description" content={page.metaDescription} />
@@ -25,7 +26,7 @@ function TopPage({firstCategory, page, products}: TopPageProps): JSX.Element {
   		firstCategory={firstCategory} 
   		page={page} 
   		products={products} 
-		/>
+		/></>}
 	</>  ;
 }
 
