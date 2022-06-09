@@ -1,8 +1,8 @@
 .tag {
 	display: inline-block;
-	width: max-content;
 
 	box-sizing: border-box;
+	width: max-content;
 	margin-right: 10px;
 
 	border-radius: 20px;
@@ -43,6 +43,7 @@
 .green {
 	color: var(--green);
 	background: var(--green-lite);
+
 	font-weight: bold;
 }
 

@@ -8,12 +8,12 @@
 	transition: all 0.2s;
 	text-align: center;
 
+	white-space: nowrap;
+
 	border: none;
 	border-radius: 5px;
 
 	font-size: 14px;
-
-	white-space: nowrap;
 }
 
 .primary {

@@ -1,6 +1,5 @@
 import styles from './Product.module.css';
 import { ProductProps } from './Product.props';
-import cn from 'classnames';
 import { Card } from '../Card/Card';
 import { Rating } from '../Rating/Rating';
 import { Tag } from '../Tag/Tag';
@@ -37,6 +36,7 @@ export const Product = motion(forwardRef(({product, className, ...props}: Produc
 			behavior: 'smooth',
 			block: 'start'
 		});
+		reviewRef.current?.focus();
 	}
 
 	return (
@@ -101,7 +101,7 @@ export const Product = motion(forwardRef(({product, className, ...props}: Produc
 				</div>
 			</Card>
 			<motion.div animate={isReviewOpened ? 'visible': 'hidden'} variants={variants} initial='hidden'>
-				<Card color='blue' className={styles.reviews} ref={reviewRef}>
+				<Card color='blue' className={styles.reviews} ref={reviewRef} tabIndex={1}>
 					{product.reviews.map(r => (
 						<div key={r._id}>
 							<Review  review={r} />
