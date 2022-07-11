@@ -18,6 +18,7 @@ function Home({menu, firstCategory}: HomeProps): JSX.Element {
       <P size='l'>slkdflksnfnewiojiojsoijcoisdnsklfdlkcsoidnosnefoeifnsndcsndksmd</P>
       <Rating rating={rating} isEditable setRating={setRating}/>
       <Input/>
+      {menu.map(m => (<h1 key={m._id.secondCategory}>{m._id.secondCategory}</h1>))}
     </>
   );
 }
